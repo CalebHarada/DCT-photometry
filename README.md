@@ -9,4 +9,4 @@ Perform photometry on FITS images from LMI at DCT.
 [`PSFModelExample.py`](PSFModelExample.py)
 -------------------
 
-This is an example of fitting 2D Gaussian models to contrived data.
+An example of fitting 2D Gaussian models to contrived data.
