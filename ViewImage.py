@@ -10,12 +10,12 @@ data = hdu[0].data
 
 # display histogram
 plt.figure()
-plt.hist(np.asarray(data).flatten(),500)
+plt.hist(np.asarray(data).flatten(), 500)
 plt.yscale('Log')
 
 # display image
 plt.figure()
-plt.imshow(data, cmap='gray', vmin=np.median(data), vmax=np.median(data)+500)
+plt.imshow(data, cmap='gray', vmin=np.median(data), vmax=np.median(data) + 500)
 plt.colorbar()
 plt.title(file)
 
