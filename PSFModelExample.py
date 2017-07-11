@@ -136,7 +136,7 @@ fit_init_1 = model_1(amplitude_0=np.max(target), x_mean_0=xpeak, y_mean_0=ypeak,
 
 fit1 = fitter(fit_init_1, tx, ty, target)
 residual1 = target - fit1(tx, ty)
-flux1 = 2 * np.pi * sigma_x * sigma_y * (fit1.parameters[0] + fit1.parameters[6])
+flux1 = 2 * np.pi * sigma_x * sigma_y * (fit1.parameters[0])
 
 fit2 = fitter(fit_init_2, tx, ty, target)
 residual2 = target - fit2(tx, ty)
