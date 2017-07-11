@@ -41,6 +41,10 @@ z = g1(x ,y) + g2(x ,y) + g3(x, y)
 
 image = image + z
 
+plt.imshow(image, origin='lower', interpolation='nearest')
+plt.colorbar()
+plt.show()
+
 #=======================================================================================================================
 
 # create and fit models to data
@@ -55,6 +59,7 @@ circles = CircularAperture((peak_tbl['xcentroid'], peak_tbl['ycentroid']), r=8)
 
 plt.figure(figsize=(8,6))
 plt.imshow(image, origin='lower', interpolation='nearest', cmap='viridis', vmax=np.median(image) + 300)
+plt.colorbar()
 plt.title('Data')
 circles.plot()
 plt.show()
