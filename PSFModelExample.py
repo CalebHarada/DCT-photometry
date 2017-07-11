@@ -42,6 +42,7 @@ z = g1(x ,y) + g2(x ,y) + g3(x, y)
 image = image + z
 
 plt.imshow(image, origin='lower', interpolation='nearest')
+plt.title('data')
 plt.colorbar()
 plt.show()
 
