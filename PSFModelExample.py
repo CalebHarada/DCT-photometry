@@ -155,7 +155,7 @@ print flux2
 
 # Plot the data with the best-fit model
 plt.figure(figsize=(12, 5))
-plt.suptitle('One 2D Gaussian')
+plt.suptitle('Single 2D Gaussian')
 plt.subplot(1, 3, 1)
 plt.imshow(target, origin='lower', interpolation='nearest', cmap='viridis')
 plt.title("Data")
@@ -164,10 +164,10 @@ plt.imshow(fit1(tx, ty), origin='lower', interpolation='nearest', cmap='viridis'
 plt.title("Model")
 plt.subplot(1, 3, 3)
 plt.imshow(residual1, origin='lower', interpolation='nearest', cmap='viridis')
-plt.title("Residual")
+plt.title("Residuals")
 
 plt.figure(figsize=(12, 5))
-plt.suptitle('Two 2D Gaussians')
+plt.suptitle('Double 2D Gaussian')
 plt.subplot(1, 3, 1)
 plt.imshow(target, origin='lower', interpolation='nearest', cmap='viridis')
 plt.title("Data")
@@ -176,7 +176,7 @@ plt.imshow(fit2(tx, ty), origin='lower', interpolation='nearest', cmap='viridis'
 plt.title("Model")
 plt.subplot(1, 3, 3)
 plt.imshow(residual2, origin='lower', interpolation='nearest', cmap='viridis')
-plt.title("Residual")
+plt.title("Residuals")
 
 fig = plt.figure(figsize=(9, 7))
 fig.suptitle('Data')
@@ -189,7 +189,7 @@ ax = fig.add_subplot(111, projection='3d')
 Axes3D.plot_surface(ax, tx, ty, fit2(tx, ty), cmap='viridis')
 
 fig = plt.figure(figsize=(9, 7))
-fig.suptitle('Residual')
+fig.suptitle('Residuals')
 ax = fig.add_subplot(111, projection='3d')
 Axes3D.plot_surface(ax, tx, ty, residual2, cmap='viridis')
 
