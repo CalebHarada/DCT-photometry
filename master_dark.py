@@ -13,6 +13,7 @@ master_bias = cp.CCDData.read('...')
 # must already have master bias created
 exp_time = ...
 # set desired exposure time
+
 ###########################################################################################################################
 
 ic = ImageFileCollection(location=directory,keywords='*')
