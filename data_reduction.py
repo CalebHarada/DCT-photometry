@@ -4,14 +4,15 @@ from astropy import units as u
 import os
 
 
-source_directory = 'Data\\LMI_2015Jun02\\LMI.20150602\\standard stars'
-save_directory = 'D:\\UChicago\\Reduced Data\\2015Jun02\\STANDARDS'
-date = '2015Jun02'
+source_directory = '...'
+save_directory = '...'
+bias = cp.CCDData.read(...)
+dark = cp.CCDData.read(...)
+Iflat = cp.CCDData.read(...)
+Rflat = cp.CCDData.read(...)
+# must have master flats, darks, and bias already in directory
 
-bias = cp.CCDData.read('Data\\LMI_%s\\Master_Bias.fits' % date)
-dark = cp.CCDData.read('Data\\LMI_%s\\Master_Dark_e5.fits' % date)
-Iflat = cp.CCDData.read('Data\\LMI_%s\\Master_Flat_e5_I.fits' % date)
-Rflat = cp.CCDData.read('Data\\LMI_%s\\Master_Flat_e5_R.fits' % date)
+################################################################################
 
 ifc = ImageFileCollection(location=source_directory,keywords=['SCITARG'])
     # Useful keywords: 'OBSERNO','IMAGETYP','SCITARG','FILTERS','EXPTIME'
