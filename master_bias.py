@@ -3,8 +3,10 @@ import ccdproc as cp
 from ccdproc import ImageFileCollection, Combiner
 from astropy import units as u
 
-directory = 'Data\\LMI_2015Jun02\\LMI.20150602'
+directory = '...'
+save_directory = '...'
 
+#########################################################################
 
 ic = ImageFileCollection(location=directory, keywords='*')
     # Useful keywords: 'OBSERNO','IMAGETYP','SCITARG','FILTERS','EXPTIME'
@@ -20,7 +22,7 @@ for frame in bias_frames:
 bias_comb = Combiner(bias_data)
 master_bias = bias_comb.median_combine()
 
-cp.fits_ccddata_writer(master_bias,'Data\\LMI_2015Jun02\\Master_Bias.fits')
+cp.fits_ccddata_writer(master_bias, save_directory)
 
 plt.figure()
 plt.imshow(master_bias, cmap='gray')
