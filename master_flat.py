@@ -3,14 +3,18 @@ import ccdproc as cp
 from ccdproc import ImageFileCollection, Combiner
 from astropy import units as u
 
+directory = '...'
+save_directory = '...'
+filter = '...'
+# set desired filter
+master_bias = cp.CCDData.read('...')
+master_dark = cp.CCDData.read('...')
+# must already have these files created
 
-### Set desired filter and the source directory to create master flat
-filter = 'R'
-directory = 'Data\\LMI_2015Jun02\\LMI.20150602\\Part 1'
+#########################################################################
 
 exp_time = 5                # Should not change from 1
-master_bias = cp.CCDData.read('DATA\\LMI_2015Jun02\\Master_Bias.fits')
-master_dark = cp.CCDData.read('DATA\\LMI_2015Jun02\\Master_Dark_e%s.fits' % str(exp_time))
+
 ic = ImageFileCollection(location=directory,keywords='*')
     # Useful keywords: 'OBSERNO','IMAGETYP','SCITARG','FILTERS','EXPTIME'
 flat_frames = ic.files_filtered(IMAGETYP='sky flat',EXPTIME='*',FILTERS=filter)
@@ -33,8 +37,7 @@ master_flat.header['EXPTIME'] = (exp_time, 'integration time, seconds')
 master_flat.header['IMAGETYP'] = 'MASTER FLAT'
 master_flat.header['FILTERS'] = (filter, 'Composite Filter Name')
 
-name = 'DATA\\LMI_2015Jun02\\Master_Flat_e%s_%s.fits' % (str(exp_time), filter)
-cp.fits_ccddata_writer(master_flat, name)
+cp.fits_ccddata_writer(master_flat, save_directory)
 
 plt.figure()
 plt.imshow(master_flat, cmap='gray')
