@@ -32,7 +32,7 @@ Apply bias subtraction and flat field correction to raw `.fits` files.
 
 Do aperture photometry on reduced `.fits` images.
 
-[`PSF_photometry`](PSF_photometry.py)
+[`PSF_Photometry`](PSF_Photometry.py)
 ---
 
 Create PSF models from `.fits` images and fit to stars to calculate flux.
