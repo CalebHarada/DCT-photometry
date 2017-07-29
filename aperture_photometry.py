@@ -10,9 +10,10 @@ import matplotlib.pyplot as plt
 
 
 
-target_simbad = 'SA_104339'     # name in Simbad
-directory = 'D:\\UChicago\\Reduced Data\\2015Jun02\\STANDARDS\\104334'
-filter = 'R'        # read from FITS header
+target_simbad = '...'     # name in Simbad
+directory = '...'       # directory containing FITS images
+save_to = '...'         # save to this directory
+filter = '...'        # read from FITS header
 
 
 ########################################################################################################################
@@ -202,7 +203,7 @@ data = [name_list, number_list, time_list, HA_list, ZA_list, air_list, filter_li
         elec_error_list, mag_list, mag_error_list]
 data_table = Table(data=data, names=columns, meta={'name': target_simbad})
 data_table.show_in_browser(jsviewer=True)
-table_name = 'C:\\Users\\caleb\\documents\\PYTHON\\U_Chicago_Research\\Data\\LMI_2015Jun02\\count_data\\standards\\aperture\\%s-band\\%s_%s_data.txt' % (filter, target_simbad, filter)
+table_name = '%s\\%s_%s_data.txt' % (save_to, target_simbad, filter)
 if os.path.isfile(table_name) is True:
     print 'Data table already exists for the target \'%s\'' % target_simbad
 else:
