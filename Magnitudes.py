@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import os
 
 
-filter = 'I'
-directory = 'Data\\LMI_2015Jun02\\count_data\\standards\\aperture'
+filter = '...'      #read from table
+directory = '...'   #directory containing data tables
 
 standards = Table.read('%s\\standards.csv' % directory)     # read standard magnitudes
 #standards.pprint()
