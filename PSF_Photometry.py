@@ -13,9 +13,10 @@ import os
 
 #=======================================================================================================================
 
-simbad_query = 'SA_104339' #Name on Simbad
-directory = 'D:\\UChicago\\Reduced Data\\2015Jun02\\STANDARDS\\104334'  #source directory (line 462 -- save directory)
-filter = 'I'
+simbad_query = '...'    #Name on Simbad
+directory = '...'       #source directory (line 462 -- save directory)
+save_to = '...'         #save table to this directory
+filter = '...'          #read from FITS header
 
 show_figs = 0       # 0 = show no images
 save_resids = 0
@@ -365,7 +366,7 @@ def psf_fit(file_name, x_coord, y_coord, sigma_x1, sigma_y1, theta_1,
         ax = fig3.add_subplot(111, projection='3d')
         ax.set_zlim(-4000, 4000)
         Axes3D.plot_surface(ax, tx, ty, residual3, cmap='viridis')
-        plt.savefig('Data\\LMI_2015Jun02\\Residuals\\' + simbad_query + '_obsno' + str(epoch) + '.png')
+        plt.savefig(save_to + '\\' + simbad_query + '_obsno' + str(epoch) + '.png')
 
     #====================================================================================
 
@@ -460,7 +461,7 @@ columns = 'Target', 'ObsNo', 'UT', 'HA', 'ZA', 'AirMass', 'Filter', 'IntTime', '
 data = [name_list, number_list, time_list, HA_list, ZA_list, air_list, filter_list, exp_list, f3_list, i3_list]
 data_table = Table(data=data, names=columns, meta={'name': simbad_query})
 
-table_name = 'Data\\LMI_2015Jun02\\count_data\\standards\\%s-band\\%s_%s_data.txt' % (filter, simbad_query, filter)
+table_name = '%s\\%s_%s_data.txt' % (save_to, simbad_query, filter)
 if os.path.isfile(table_name) is True:
     print 'Data table already exists for the target \'%s\'' % simbad_query
 else:
