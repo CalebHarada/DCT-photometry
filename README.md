@@ -2,23 +2,28 @@
 
 Perform photometry on images from the Large Monolithic Imager at the Discovery Channel Telescope.
 
+---
+
 ## [`LMI_Photometry.py`](LMI_Photometry.py)
 
 This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
 
 #### Data_Reduction
+
 *func* `LMI_Photometry.` **`Data_Reduction`** (*directory, filters, targets, save_to=None, dark_exp=1.0, subtract_dark=False*)
 
 Creates and applies a master bias, flat, and dark (optional) frame to science images, and updates the .FITS header to make targets Simbad-compatible.
 
 ##### `Parameters:`
 
-  **directory** : str
+  ...**directory** : str
   
-  A directory containing raw .FITS images and calibration frames
-    :param filters: dict
-            Filters used and corresponding flat exposures
-            {'filter' : flat exposure}
+  ...A directory containing raw .FITS images and calibration frames
+  
+  ...**filters** : dict
+  
+  ...Filters used and corresponding flat exposures
+  ...e.g. {'filter' : flat exposure}
     :param targets: dict
             "SCITARG" name in .FITS header and corresponding name in Simbad
             {'FITS target name' : 'Simbad target name'}
