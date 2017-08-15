@@ -24,7 +24,7 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
     
    Filters used and corresponding flat exposures
     
-   *e.g. {'filter' : flat exposure}*
+      *{'filter' : flat exposure}*
   
    **targets** : dict
     
