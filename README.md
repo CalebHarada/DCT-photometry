@@ -6,7 +6,7 @@ Perform photometry on images from the Large Monolithic Imager at the Discovery C
 
 ## [`LMI_Photometry.py`](LMI_Photometry.py)
 
-This module contains three functions that produce useful photometry from raw `.FITS` images from LMI at DCT:
+This module contains three functions that produce useful photometry from raw `.FITS` images from LMI at DCT. To use, simply import the functions and follow this [example](LMI_Photometry_EXAMPLE.py).
 
 ### Data_Reduction
 
@@ -113,3 +113,9 @@ Reads magnitudes and airmass values saved in the `.FITS` headers of standard sta
 ## [`ViewImage.py`](ViewImage.py)
 
 Displays a given `.FITS` image. Useful for visual inspection for hot pixels, cosmic rays, saturation, etc.
+
+## [`LMI_Photometry_EXAMPLE.py`](LMI_Photometry_EXAMPLE.py)
+
+An example of how to use `LMI_Photometry.py`
+
+
