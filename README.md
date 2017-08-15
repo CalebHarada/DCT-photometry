@@ -10,22 +10,22 @@ This module contains three functions that produce useful photometry from raw .FI
 `Data_Reduction` 
 Creates and applies a master bias, flat, and dark (optional) frame to science images, and updates the .FITS header to make targets Simbad-compatible.
 
-    :param directory: str
+    param directory: str
             A directory containing raw .FITS images and calibration frames
-    :param filters: dict
+    param filters: dict
             Filters used and corresponding flat exposures
             {'filter' : flat exposure}
-    :param targets: dict
+    param targets: dict
             "SCITARG" name in .FITS header and corresponding name in Simbad
             {'FITS target name' : 'Simbad target name'}
-    :param save_to: str, opt
+    param save_to: str, opt
             Optional second directory to save calibrated frames to
-    :param dark_exp: float
+    param dark_exp: float
             Exposure time for dark frames, default is 1.0 sec
-    :param subtract_dark: bool
+    param subtract_dark: bool
             Set to True to subtract dark frame, default is False
             Note: LMI has negligible dark current
-    :return: None
+    return: None
 
 `Aperture_Photometry` 
 Measures raw electron counts for a target star and utilizes the .FITS header to calculate and save fluxes and instrumental magnitudes. It flags specified stars as standards to be used for standard magnitude transformations.
