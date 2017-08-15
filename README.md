@@ -6,7 +6,7 @@ Perform photometry on images from the Large Monolithic Imager at the Discovery C
 
 This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
 
-### Data_Reduction
+#### **Data_Reduction**
 *func* `LMI_Photometry.` **`Data_Reduction`**
 Creates and applies a master bias, flat, and dark (optional) frame to science images, and updates the .FITS header to make targets Simbad-compatible.
 
