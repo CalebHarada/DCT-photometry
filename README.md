@@ -18,24 +18,33 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
 
     **directory** : str
     
-    A directory containing raw .FITS images and calibration frames
+    A directory containing raw `.FITS` images and calibration frames
     
     **filters** : dict
     
     Filters used and corresponding flat exposures
     
-    e.g. {'filter' : flat exposure}
+    *e.g. {'filter' : flat exposure}*
   
-    :param targets: dict
-            "SCITARG" name in .FITS header and corresponding name in Simbad
-            {'FITS target name' : 'Simbad target name'}
-    :param save_to: str, opt
-            Optional second directory to save calibrated frames to
-    :param dark_exp: float
-            Exposure time for dark frames, default is 1.0 sec
-    :param subtract_dark: bool
-            Set to True to subtract dark frame, default is False
-            Note: LMI has negligible dark current
+    **targets** : dict
+    
+    "SCITARG" name in `.FITS` header and corresponding name in Simbad
+    
+    *e.g. {'FITS target name' : 'Simbad target name'}*
+            
+    **save_to** : str, optional (default=`None`)
+    
+    Optional second directory to save calibrated frames to
+    
+    **dark_exp** : float (default=`1.0`)
+    
+    Exposure time for dark frames
+    
+    **subtract_dark** : bool (default=`False`)
+    
+    Set to `True` in order to subtract dark frame
+    
+    *Note: LMI has negligible dark current*
             
             
             
