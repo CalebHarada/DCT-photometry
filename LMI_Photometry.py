@@ -405,6 +405,7 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         ZA = hdu.header['ZA']
 
         target = hdu.header['QUERNAM']
+        print 'Reading science target info...'
         epoch = hdu.header['EPOCH']
         filt = hdu.header['FILTERS']
         obsno = hdu.header['OBSERNO']
@@ -412,6 +413,8 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         mag_ins = hdu.header['OBJMAG']
         return target, epoch, filt, obsno, airmass, mag_ins
 
+    table_out = Table(names=('Target', 'Filter', 'Standard_Mag', 'Error'),
+                      dtype=('S24', 'S1', 'f8', 'f8'))
     for filter in filters:
 
         std_targs = ifc.files_filtered(IMAGETYP='OBJECT', FILTERS=filter, STANDARD='YES')
@@ -423,7 +426,7 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         uY = []
 
         fig = plt.figure(figsize=(10, 8))
-        fig.suptitle('%s-Band Transformation' % filter)
+        fig.suptitle('%s-Band Magnitude Transformation' % filter)
         ax = fig.add_subplot(111)
         ax.set_xlabel('Airmass')
         ax.set_ylabel('Instrumental - Standard (mag)')
@@ -441,6 +444,7 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         std_table = Table(names=('target', 'obsno', 'airmass', 'mag_ins'),
                           dtype=('S24', 'f8', 'f8', 'f8'))
         for targ in std_targs:
+            print 'Reading standard magnitudes...'
             file = '%s\\%s' % (directory, targ)
             hdu = fits.open(file)[0]
             ZA = hdu.header['ZA']
@@ -487,6 +491,7 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         Y = np.asarray(Y, dtype='float64')
         uY = np.asarray(uY, dtype='float64')
 
+        print 'Calculating %s-band standard magnitude transformation...' % filter
         def func(x, A, B):
             return A + B * x
 
@@ -509,24 +514,13 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
         plt.xlim(1, 1.5)
         plt.ylim(np.min(Y) - 0.1, np.max(Y) + 0.1)
 
-        standard_table.pprint(max_lines=-1, max_width=-1)
+        if show_figures == True:
+            print 'STANDARD STARS (%s):' % filter
+            standard_table.pprint(max_lines=-1, max_width=-1)
 
 
-
-
-
-
-
-
-
-
-
-
-
-        mag_table = Table(names=('Target', 'Airmass', 'Airmass_std', 'Mag_ins', 'Mag_ins_std'),
+        mag_ins_table = Table(names=('Target', 'Airmass', 'Airmass_std', 'Mag_ins', 'Mag_ins_std'),
                           dtype=('S24', 'f8', 'f8', 'f8', 'f8'))
-
-
         science_targs = ifc.files_filtered(IMAGETYP='OBJECT', FILTERS=filter, STANDARD='NO')
         science_table = Table(names=('Target', 'Epoch', 'Filter', 'OBSERNO', 'Airmass', 'Mag_ins'),
                       dtype=('S24', 'f8', 'S1', 'f8', 'f8', 'f8'))
@@ -540,32 +534,40 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
             num_obs = group_length / bin_size
             while num_obs > 0:
                 bin_group = group[0 : bin_size]
-                print bin_group
                 mean_airmass = np.mean(bin_group['Airmass'])
                 std_airmass = np.std(bin_group['Airmass'])
                 mean_mag_ins = np.mean(bin_group['Mag_ins'])
                 std_mag_ins = np.std(bin_group['Mag_ins'])
-                mag_table.add_row([target, mean_airmass, std_airmass, mean_mag_ins, std_mag_ins])
+                target = bin_group['Target'][0]
+                mag_ins_table.add_row([target, mean_airmass, std_airmass, mean_mag_ins, std_mag_ins])
                 group.remove_rows(slice(0, bin_size))
                 num_obs -= 1
-        print mag_table
 
+        for row in mag_ins_table:
+            target = row['Target']
+            print 'Applying standard magnitude transformation to %s...' % target
+            mi = row['Mag_ins']
+            am = row['Airmass']
+            mag_real = mi - func(am, *popt)
+            samplemag = np.asarray([func(am, *pi) for pi in ps])
+            uncert = func(am, *popt) - np.percentile(samplemag, 15.87, axis=0)
+            mi_error = row['Mag_ins_std']
+            mr_error = np.sqrt(mi_error**2 + uncert**2)
+            table_out.add_row([target, filter, mag_real, mr_error])
 
+        if show_figures == True:
+            plt.show()
 
+    print 'Saving measurements table...'
+    name = '%s\\Measurements_Table.txt' % (directory)
+    if os.path.isfile(name) is True:
+        print 'Measurements table already exists.'
+    else:
+        table_out.write(name, format='ascii')
+        print 'Measurements table saved.'
 
     if show_figures == True:
-        plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
+        print 'CONVERTED SCIENCE MAGS: '
+        print table_out
 
 
