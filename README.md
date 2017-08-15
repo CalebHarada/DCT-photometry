@@ -14,7 +14,7 @@ This module contains three functions that produce useful photometry from raw .FI
 
 Creates and applies a master bias, flat, and dark (optional) frame to science images, and updates the .FITS header to make targets Simbad-compatible.
 
-##### ..* `Parameters:`
+* **`Parameters:`**
 
   ...**directory** : str..
   
