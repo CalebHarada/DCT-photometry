@@ -6,7 +6,7 @@ Perform photometry on images from the Large Monolithic Imager at the Discovery C
 
 ## [`LMI_Photometry.py`](LMI_Photometry.py)
 
-This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
+This module contains three functions that produce useful photometry from raw `.FITS` images from LMI at DCT:
 
 ### Data_Reduction
 
