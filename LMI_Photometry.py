@@ -1,3 +1,25 @@
+
+"""
+
+LMI_Photometry
+Caleb K. Harada, 2017
+(The University of Maryland; The University of Chicago)
+
+This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
+-   'Data_Reduction' creates and applies a master bias, flat, and dark (optional) frame to science images, and updates
+    the .FITS header to make targets Simbad-compatible.
+-   'Aperture_Photometry' measures raw electron counts for a target star and utilizes the .FITS header to calculate and
+    save fluxes and instrumental magnitudes. It flags specified stars as standards to be used for standard magnitude
+    transformations.
+-   'Convert_Magnitudes' reads the magnitudes and airmass values saved in the .FITS headers of standard stars,
+    calculates a magnitude transformation for each filter used, then applies the transformation to science images to
+    convert their instrumental magnitudes to standard magnitudes. It saves measurements and uncertainties in a .txt
+    table in 'ascii' format.
+
+contact: charada@umd.edu
+"""
+
+
 import ccdproc as cp
 from ccdproc import ImageFileCollection, Combiner
 from astropy import units as u
@@ -12,19 +34,28 @@ import matplotlib.pyplot as plt
 import ast
 from scipy.optimize import curve_fit
 
-#
+#######################################################################################################################
 
 def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subtract_dark=False):
 
     '''
 
     :param directory: str
-    :param filters: dict {'filter' : [flat exposure]}
-    :param targets: dict {'target' : 'Simbad reference'}
+            A directory containing raw .FITS images and calibration frames
+    :param filters: dict
+            Filters used and corresponding flat exposures
+            {'filter' : flat exposure}
+    :param targets: dict
+            "SCITARG" name in .FITS header and corresponding name in Simbad
+            {'FITS target name' : 'Simbad target name'}
     :param save_to: str, opt
+            Optional second directory to save calibrated frames to
     :param dark_exp: float
+            Exposure time for dark frames, default is 1.0 sec
     :param subtract_dark: bool
-    :return:
+            Set to True to subtract dark frame, default is False
+            Note: LMI has negligible dark current
+    :return: None
     '''
 
     pipeline_out = '%s\\pipeline_out' % directory
@@ -84,20 +115,21 @@ def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subt
         master_dark.header['IMAGETYP'] = 'MASTER DARK'
         return master_dark
 
-    if save_to == None:
-        dark_name = '%s\\Master_Dark.fits' % pipeline_out
-        if os.path.isfile(dark_name) is False:
-            cp.fits_ccddata_writer(ccd_data=make_dark(), filename=dark_name)
-            print 'Master dark created'
+    if subtract_dark == True:
+        if save_to == None:
+            dark_name = '%s\\Master_Dark.fits' % pipeline_out
+            if os.path.isfile(dark_name) is False:
+                cp.fits_ccddata_writer(ccd_data=make_dark(), filename=dark_name)
+                print 'Master dark created'
+            else:
+                print 'Master dark already exists'
         else:
-            print 'Master dark already exists'
-    else:
-        dark_name = '%s\\Master_Dark.fits' % save_to
-        if os.path.isfile(dark_name) is False:
-            cp.fits_ccddata_writer(ccd_data=make_dark(), filename=dark_name)
-            print 'Master dark created'
-        else:
-            print 'Master dark already exists'
+            dark_name = '%s\\Master_Dark.fits' % save_to
+            if os.path.isfile(dark_name) is False:
+                cp.fits_ccddata_writer(ccd_data=make_dark(), filename=dark_name)
+                print 'Master dark created'
+            else:
+                print 'Master dark already exists'
 
     def make_flat(filter, flat_exp):
         flat_frames = ifc.files_filtered(IMAGETYP='sky flat', EXPTIME=flat_exp, FILTERS=filter)
@@ -114,11 +146,14 @@ def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subt
             flat_data.append(bias_sub)
         flat_comb = Combiner(flat_data)
         flat_medcomb = flat_comb.median_combine()
-        master_dark = cp.CCDData.read(dark_name)
-        master_flat = cp.subtract_dark(flat_medcomb, master_dark,
-                                       dark_exposure=master_dark.header['EXPTIME'] * u.second,
-                                       data_exposure=flat_exp * u.second,
-                                       scale=False)
+        if subtract_dark == True:
+            master_dark = cp.CCDData.read(dark_name)
+            master_flat = cp.subtract_dark(flat_medcomb, master_dark,
+                                           dark_exposure=master_dark.header['EXPTIME'] * u.second,
+                                           data_exposure=flat_exp * u.second,
+                                           scale=False)
+        else:
+            master_flat = flat_medcomb
         master_flat.header['EXPTIME'] = (flat_exp, 'integration time, seconds')
         master_flat.header['IMAGETYP'] = 'MASTER FLAT'
         master_flat.header['FILTERS'] = (filter, 'Composite Filter Name')
@@ -150,8 +185,8 @@ def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subt
         target_gained = cp.gain_correct(target_dev, target_read.header['GAIN'] * u.electron/u.adu)
         master_bias = cp.CCDData.read(bias_name)
         bias_sub = cp.subtract_bias(target_gained, master_bias)
-        master_dark = cp.CCDData.read(dark_name)
         if subtract_dark == True:
+            master_dark = cp.CCDData.read(dark_name)
             dark_sub = cp.subtract_dark(bias_sub, master_dark,
                                         dark_exposure=master_dark.header['EXPTIME'] * u.second,
                                         data_exposure=target_gained.header['EXPTIME'] * u.second,
@@ -195,17 +230,22 @@ def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subt
 
     print 'Data reduction done.'
 
-#
+#######################################################################################################################
 
 def Aperture_Photometry(directory, ap_radius, standards, show_figures=False):
 
     '''
 
     :param directory: str
+            A directory containing reduced .FITS images
     :param ap_radius: int
-    :param standards: dict{'Query Name' : ['Standard Query Names']}
+            Radius of aperture used for photometry
+    :param standards: dict
+            Simbad-compatible name with list of standard star names in the field
+            {'Query Name' : ['Standard Query Names']}
     :param show_figures: bool
-    :return:
+            Display optional figures that are relevant, default is False
+    :return: None
     '''
 
     Simbad.add_votable_fields('coo(fk5)', 'propermotions')
@@ -385,17 +425,22 @@ def Aperture_Photometry(directory, ap_radius, standards, show_figures=False):
 
     print 'Aperture photometry done.'
 
-#
+#######################################################################################################################
 
 def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
 
     '''
 
     :param directory: str
-    :param filters: list(str)
+            A directory containing reduced .FITS images instrumental magnitudes appended to the .FITS header
+    :param filters: list
+            Filters used
+            ['filter 1', 'filter 2']
     :param bin_size: int
+            Number of epochs target is observed, default is 10
     :param show_figures: bool
-    :return:
+            Display optional figures that are relevant, default is False
+    :return: None
     '''
 
     ifc = ImageFileCollection(location=directory, keywords='*')
@@ -569,5 +614,6 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
     if show_figures == True:
         print 'CONVERTED SCIENCE MAGS: '
         print table_out
+
 
 
