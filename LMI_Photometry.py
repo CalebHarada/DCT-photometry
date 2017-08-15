@@ -6,8 +6,8 @@ Caleb K. Harada, 2017
 (The University of Maryland; The University of Chicago)
 
 This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
--   'Data_Reduction' creates and applies a master bias, flat, and dark (optional) frame to science images, and updates
-    the .FITS header to make targets Simbad-compatible.
+-   'Data_Reduction' creates and applies a master bias, flat, and dark (optional) frame to science images, saves to
+    directory, and updates the .FITS header to make targets Simbad-compatible.
 -   'Aperture_Photometry' measures raw electron counts for a target star and utilizes the .FITS header to calculate and
     save fluxes and instrumental magnitudes. It flags specified stars as standards to be used for standard magnitude
     transformations.
@@ -49,7 +49,7 @@ def Data_Reduction(directory, filters, targets, save_to=None, dark_exp=1.0, subt
             "SCITARG" name in .FITS header and corresponding name in Simbad
             {'FITS target name' : 'Simbad target name'}
     :param save_to: str, opt
-            Optional second directory to save calibrated frames to
+            Optional second directory to save calibrated frames to, default is None
     :param dark_exp: float
             Exposure time for dark frames, default is 1.0 sec
     :param subtract_dark: bool
@@ -242,7 +242,7 @@ def Aperture_Photometry(directory, ap_radius, standards, show_figures=False):
             Radius of aperture used for photometry
     :param standards: dict
             Simbad-compatible name with list of standard star names in the field
-            {'Query Name' : ['Standard Query Names']}
+            {'Query Name' : ['Standard Query Name', 'Standard Query Name']}
     :param show_figures: bool
             Display optional figures that are relevant, default is False
     :return: None
