@@ -3,7 +3,6 @@
 Perform photometry on images from the Large Monolithic Imager at the Discovery Channel Telescope.
 
 ## [`LMI_Photometry`](LMI_Photometry.py)
----
 
 This module contains three functions that produce useful photometry from raw .FITS images from LMI at DCT:
 
@@ -20,6 +19,5 @@ Reads the magnitudes and airmass values saved in the .FITS headers of standard s
 
 
 ## [`ViewImage`](ViewImage.py)
----
 
 Displays a specified `.FITS` image. Useful for visual inspection for hot pixels, cosmic rays, saturation, etc.
