@@ -54,7 +54,7 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
 
 *func* `LMI_Photometry.` **`Aperture_Photometry`** (*directory, ap_radius, standards, show_figures=False*)
 
-Measures raw electron counts for a target star and utilizes the .FITS header to calculate and save fluxes and instrumental magnitudes. Flags specified stars as standards to be used for standard magnitude transformations.
+Measures raw electron counts for a target star and utilizes the `.FITS` header to calculate and save fluxes and instrumental magnitudes. Flags specified stars as standards to be used for standard magnitude transformations.
 
 * **`Parameters:`**
    
@@ -84,7 +84,7 @@ Measures raw electron counts for a target star and utilizes the .FITS header to 
 
 *func* `LMI_Photometry.` **`Convert_Magnitudes`** (*directory, filters, bin_size=10, show_figures=False*)
 
-Reads magnitudes and airmass values saved in the `.FITS` headers of standard stars, calculates a magnitude transformation for each filter used, then applies the transformation to science images to convert their instrumental magnitudes to standard magnitudes. Saves measurements and uncertainties in a .txt table in `ascii` format.
+Reads magnitudes and airmass values saved in the `.FITS` headers of standard stars, calculates a magnitude transformation for each filter used, then applies the transformation to science images to convert their instrumental magnitudes to standard magnitudes. Saves measurements and uncertainties in a `.txt` table in `ascii` format.
 
 * **`Parameters:`**
 
