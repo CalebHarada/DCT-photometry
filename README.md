@@ -23,14 +23,14 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
    **filters** : dict
     
    Filters used and corresponding flat exposures
-    
-      *{'filter' : flat exposure}*
+   
+      {'filter' : flat exposure}
   
    **targets** : dict
     
    "SCITARG" name in `.FITS` header and corresponding name in Simbad
     
-   *e.g. {'FITS target name' : 'Simbad target name'}*
+      {'FITS target name' : 'Simbad target name'}
             
    **save_to** : str, optional (default=`None`)
     
@@ -70,7 +70,7 @@ Measures raw electron counts for a target star and utilizes the .FITS header to 
     
    Simbad-compatible name with list of standard star names in the field
     
-   *e.g. {'Query Name' : ['Standard Query Name', 'Standard Query Name']}*
+      {'Query Name' : ['Standard Query Name', 'Standard Query Name']}
             
    **show_figures** : bool, optional (default=`False`)
     
@@ -96,7 +96,7 @@ Reads magnitudes and airmass values saved in the `.FITS` headers of standard sta
     
    A list of filters used
    
-   *e.g. ['filter 1', 'filter 2']*
+      ['filter 1', 'filter 2']
    
    **bin_size** : int, optional (default=`10`)
    
