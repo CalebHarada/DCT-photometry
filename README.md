@@ -17,12 +17,14 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
 * **`Parameters:`**
 
     **directory** : str
-                     A directory containing raw .FITS images and calibration frames
-  
-...**filters** : dict
-  
-...Filters used and corresponding flat exposures
-...e.g. {'filter' : flat exposure}
+    
+    A directory containing raw .FITS images and calibration frames
+    
+    **filters** : dict
+    
+    Filters used and corresponding flat exposures
+    
+    e.g. {'filter' : flat exposure}
   
     :param targets: dict
             "SCITARG" name in .FITS header and corresponding name in Simbad
