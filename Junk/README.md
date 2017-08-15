@@ -1,10 +1,6 @@
 # Junk
-This folder contains old pieces of code that were prototypes of [`LMI_Photometry.py`](https://github.com/CalebHarada/DCT-photometry/blob/master/LMI_Photometry.py)
+This folder contains old pieces of code that were prototypes of [`LMI_Photometry.py`](https://github.com/CalebHarada/DCT-photometry/blob/master/LMI_Photometry.py). Much of it is probably buggy and not very useful.
 
-[`ViewImage.py`](ViewImage.py)
----
-
-`ViewImage.py` allows you to visually inspect a `.fits` image for hot pixels, cosmic rays, saturation, etc., and conveniently displays a histogram of the image.
 
 [`master_bias.py`](master_bias.py)
 ---
