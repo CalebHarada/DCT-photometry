@@ -112,4 +112,4 @@ Reads magnitudes and airmass values saved in the `.FITS` headers of standard sta
 
 ## [`ViewImage.py`](ViewImage.py)
 
-Displays a specified `.FITS` image. Useful for visual inspection for hot pixels, cosmic rays, saturation, etc.
+Displays a given `.FITS` image. Useful for visual inspection for hot pixels, cosmic rays, saturation, etc.
