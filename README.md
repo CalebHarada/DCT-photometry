@@ -16,7 +16,7 @@ Creates and applies a master bias, flat, and dark (optional) frame to science im
 
 * **`Parameters:`**
 
-      **directory** : str
+    **directory** : str
   
 ...A directory containing raw .FITS images and calibration frames
   
