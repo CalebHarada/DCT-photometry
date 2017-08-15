@@ -1,5 +1,5 @@
-# DCT-photometry
-Perform photometry on FITS images from LMI at DCT.
+# Junk
+This folder contains old pieces of code that were prototypes of [`LMI_Photometry.py`](DCT-photometry\\LMI_Photometry.py)
 
 [`ViewImage.py`](ViewImage.py)
 ---
