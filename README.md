@@ -1,6 +1,6 @@
 # DCT-Photometry
 
-Perform photometry on images from the [Large Monolithic Imager](www2.lowell.edu/rsch/LMI/LMI.html) at the [Discovery Channel Telescope](lowell.edu/research/research-facilities/4-3-meter-dct/).
+Perform photometry on images from the [Large Monolithic Imager](http://www2.lowell.edu/rsch/LMI/LMI.html) at the [Discovery Channel Telescope](https://lowell.edu/research/research-facilities/4-3-meter-dct/).
 
 ---
 
