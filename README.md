@@ -8,6 +8,17 @@ Perform photometry on images from the [Large Monolithic Imager](http://www2.lowe
 
 This module contains three functions that produce useful photometry from raw `.FITS` images from LMI at DCT. To use, simply follow this [example](LMI_Photometry_EXAMPLE.py).
 
+### *Requirements:*
+
+numpy
+scipy
+matplotlib
+[ccdproc](http://ccdproc.readthedocs.io/en/latest/ccdproc/)
+[astropy](http://www.astropy.org/)
+[astroquery](http://astroquery.readthedocs.io/en/latest/index.html)
+[photutils](http://photutils.readthedocs.io/en/stable/index.html)
+
+
 ### Data_Reduction
 
 *func* `LMI_Photometry.` **`Data_Reduction`** (*directory, filters, targets, save_to=None, dark_exp=1.0, subtract_dark=False*)
