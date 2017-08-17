@@ -11,11 +11,17 @@ This module contains three functions that produce useful photometry from raw `.F
 ### *Requirements:*
 
 numpy
+
 scipy
+
 matplotlib
+
 [ccdproc](http://ccdproc.readthedocs.io/en/latest/ccdproc/)
+
 [astropy](http://www.astropy.org/)
+
 [astroquery](http://astroquery.readthedocs.io/en/latest/index.html)
+
 [photutils](http://photutils.readthedocs.io/en/stable/index.html)
 
 
