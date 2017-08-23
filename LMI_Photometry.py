@@ -541,6 +541,9 @@ def Convert_Magnitudes(directory, filters, bin_size=10, show_figures=False):
             return A + B * x
 
         popt, pcov = curve_fit(f=func, xdata=X, ydata=Y, sigma=uY)
+        
+        print '%s-band transformation:' % filter
+        print '%s_i - %s_L = %s + %s(X)' % (filter, filter, round(popt[0], 3), round(popt[1], 3))
 
         xline = np.linspace(-1, 10, 1000)
         ax.plot(xline, func(xline, *popt), 'k--', label='Fit')
